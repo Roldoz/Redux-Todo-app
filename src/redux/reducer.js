@@ -1,40 +1,31 @@
-import {INSERT_TODO, TOGGLE_TODO} from "./types"
-
-const inisitialState = {
-    data : []
-}
-
-const reducer = (state = inisitialState, action) => {
-switch(action.type){
-    case INSERT_TODO :
+const initialState = {
+    todos: [],
+  }
+  
+  const Reducer = (state = initialState, action) => {
+    switch (action.type) {
+      case "Add-Todo":
         return {
-            ...state,
-            data : [
-                ...state.data,
-                {
-                    id : action.payload.id,
-                    content : action.payload.content,
-                    complete : false,
-                }
-            ]
+          ...state,
+          todos: [...state.todos, action.payload],
         }
-    case TOGGLE_TODO : 
-    const {id} = action.payload;
-    return{
-        ...state,
-        data : state.data.map((row) => {
-            if (row.id === id){
-                return{
-                    id : row.id,
-                    content : row.content,
-                    complete : !row.complete
-                }
-            }else {return row}
-        })
+      case "Toggle-Todo":
+        return {
+          todos: state.todos.map((todo) =>
+            todo.id === action.payload ? { ...todo, isDone: !todo.isDone } : todo
+          ),
+        }
+      case "Edit-Todo" :
+        return {
+          todos: state.todos.map((todo) =>
+          todo.id === action.payload.id ? { ...todo, description: action.payload.description } : todo
+        ),
+         
+        }
+     
+      default:
+        return state;
     }
-    
-    default : return state
-}
-}
-
-export default reducer;
+  }
+  
+  export default Reducer;

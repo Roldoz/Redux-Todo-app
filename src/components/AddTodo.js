@@ -1,40 +1,38 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { insertTodo } from "../redux/actions"
-import { TextField, Button,Fab } from '@material-ui/core';
-import AddIcon from '@material-ui/icons/Add';
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { addTodo } from "../redux/actions";
+import { TextField, Fab } from "@material-ui/core";
+import AddIcon from "@material-ui/icons/Add";
 
+const AddTodo = () => {
+  const dispatch = useDispatch();
+  const [newTodo, setNewTodo] = useState("");
 
-class AddTodo extends Component {
-    state = { 
-        input : ""
-     }
+  const handleChange = (e) => {
+    setNewTodo(e.target.value);
+  };
 
-     
-     handleChange = (e) => {
-         this.setState({
-             input : e.target.value
-         })
-     }
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (newTodo === "") return;
+    dispatch(addTodo(newTodo));
+    setNewTodo("");
+  };
 
-     handleClick = () =>{
-         this.props.insertTodo(this.state.input)
-         this.setState({input : ''})
-     }
-    render() { 
-        return ( 
-            <div className='addTodo'>
-                <TextField id="standard-basic" label="New Todo" value={this.state.input} onChange={this.handleChange} />
-                
-        <Fab color="primary" onClick={this.handleClick}  >
+  return (
+    <div>
+      <form onSubmit={handleSubmit}>
+        <TextField
+          id="standard-basic"
+          label="New Todo"
+          value={newTodo}
+          onChange={handleChange}
+        />
+        <Fab color="primary" onClick={handleSubmit}>
           <AddIcon />
         </Fab>
-        
-                {/* <input type="text" value={this.state.input} onChange={this.handleChange} /> */}
-                {/* <button className="button" onClick={this.handleClick}>Add New</button> */}
-            </div>
-         );
-    }
-}
- 
-export default connect(null,{insertTodo}) (AddTodo);
+      </form>
+    </div>
+  );
+};
+export default AddTodo;

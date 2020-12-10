@@ -1,33 +1,26 @@
-import {EDIT_TODO, INSERT_TODO, TOGGLE_TODO} from "./types"
-
-let initialId = 0;
-
-export const insertTodo = row => {
+export const addTodo = (newTodo) => {
     return {
-        type : INSERT_TODO,
-        payload : {
-            id : ++initialId,
-            content : row
-        }
-    } 
-}
-
- const toggleTodo = id => {
-    return {
-        type : TOGGLE_TODO,
-        payload : {
-            id 
-        }
+      type: "Add-Todo",
+      payload: {
+        id: Math.random(),
+        description: newTodo,
+        isDone: false,
+      }
     }
-}
-
-const editTodo = row => {
+  }
+  export const toggleTodo = (id) => {
     return {
-    type : EDIT_TODO,
-    payload : {
-        id : ++initialId,
-        content : row
-    }}
-}
-
-export default toggleTodo
+      type: "Toggle-Todo",
+      payload: id,
+    }
+  }
+  export const editTodo = (id, newDesc) => {
+    return {
+      type: "Edit-Todo",
+      payload: {
+        id,
+        description : newDesc,
+      }
+    }
+  }
+ 
