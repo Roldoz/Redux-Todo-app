@@ -8,7 +8,9 @@ import Button from "@material-ui/core/Button";
 
 const ListTodo = () => {
   const dispatch = useDispatch();
-  const todoList = useSelector((state) => state.todos);
+  let todoList = useSelector((state) => state.todos);
+
+  const [filt, setFilt] = useState("All");
 
   const handleToggle = (id) => {
     dispatch(toggleTodo(id));
@@ -19,8 +21,21 @@ const ListTodo = () => {
     setNewDesc(e.target.value);
   };
 
+  if (filt === "Done") {
+    todoList = todoList.filter((el) => el.isDone === true);
+  } else if (filt === "Not done") {
+    todoList = todoList.filter((el) => el.isDone === false);
+  } else {
+    todoList = todoList;
+  }
+
   return (
     <div className="container">
+      <select onChange={(e) => setFilt(e.target.value)}>
+        <option>All</option>
+        <option>Not done</option>
+        <option>Done</option>
+      </select>
       {todoList.map((todo) => (
         <div key={todo.id}>
           <ul className="todo-ul">
@@ -45,7 +60,6 @@ const ListTodo = () => {
               <EditTodo
                 handleEdit={() => {
                   dispatch(editTodo(todo.id, newDesc));
-                  console.log(todo.id, newDesc);
                 }}
                 handleChangeDesc={handleChangeDesc}
                 newDesc={newDesc}
@@ -57,4 +71,4 @@ const ListTodo = () => {
     </div>
   );
 };
-export default ListTodo
+export default ListTodo;

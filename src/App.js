@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./App.css";
 import AddTodo from "./components/AddTodo";
 import ListTodo from "./components/ListTodo";
@@ -6,10 +6,10 @@ import ListTodo from "./components/ListTodo";
 function App() {
   return (
     <div className="App">
-      <AddTodo></AddTodo>
+      <AddTodo />
       <ListTodo />
     </div>
   );
 }
 
-export default App
+export default App;

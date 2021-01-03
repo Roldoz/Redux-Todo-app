@@ -23,4 +23,8 @@ export const addTodo = (newTodo) => {
       }
     }
   }
+  export const filterTask = (str) => ({
+    type: 'FILTER_TASKS',
+    payload: str,
+  });
  
